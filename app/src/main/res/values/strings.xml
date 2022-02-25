@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Travel_Wishlist</string>
+    <string name="where_do_you_want_to_go">Where do you want to go?</string>
+    <string name="add_button_text">Add</string>
+    <string name="main_photo_attribution">Photo by Charlie Gallant on Unsplash</string>
+    <string name="no_place_name_entered_warning">Enter place name</string>
+    <string name="dupe_place_warning">You already added that place</string>
+    <string name="map_icon_clicked_confirmation">$place.name map icon was clicked</string>
+    <string name="shows_map_accessibility_text">Shows Map</string>
+    <string name="created_on">Created on %1$s</string>
+    <string name="place_deleted">%1$s deleted</string>
+    <string name="undo_place_deleted">UNDO</string>
+</resources>
