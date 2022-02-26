@@ -34,6 +34,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <EditText
+        android:id="@+id/reason_to_visit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/medium_spacing"
+        android:background="@color/white"
+        android:ems="10"
+        android:hint="@string/why_do_you_want_to_go_there"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:padding="@dimen/small_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/new_place_name" />
+
     <Button
         android:id="@+id/add_new_place_button"
         android:layout_width="wrap_content"
@@ -54,6 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_place_name" />
+        app:layout_constraintTop_toBottomOf="@+id/reason_to_visit" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

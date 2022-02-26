@@ -27,6 +27,9 @@ class PlaceRecyclerAdapter(private val places: List<Place>,
             // function to handle connecting view components with data that needs to go into them
             val placeNameTextView: TextView = view.findViewById(R.id.place_name)
             placeNameTextView.text = place.name
+            // replicating process of connecting view reason component with data that needs to go into it
+            val reasonToVisitEditText: TextView = view.findViewById(R.id.reason_to_visit)
+            reasonToVisitEditText.text = place.reason
 
             // find datecreated textview and setting its text to the place object's date added
             val dateCreatedOnTextView: TextView = view.findViewById(R.id.date_place_added)

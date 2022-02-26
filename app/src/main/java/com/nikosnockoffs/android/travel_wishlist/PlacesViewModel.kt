@@ -8,8 +8,8 @@ const val TAG = "PLACES_VIEW_MODEL"
 class PlacesViewModel: ViewModel() {
 
     // making list private to make sure ViewModel is controlling access - e.g. to prevent duplicates
-    private val places = mutableListOf<Place>(Place("Berlin, Germany"),
-        Place("Prague, Hungary"), Place("Amsterdam, Netherlands"))
+    private val places = mutableListOf<Place>(Place("Berlin, Germany", "The graffiti art scene"),
+        Place("Prague, Hungary", "The architecture"), Place("Amsterdam, Netherlands", "Art and music and food"))
 
     // Kotlin is doing a "smart-cast" to convert mutable list to immutable list
     fun getPlaces(): List<Place> {
