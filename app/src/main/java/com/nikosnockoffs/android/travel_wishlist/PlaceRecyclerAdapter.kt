@@ -3,13 +3,15 @@ package com.nikosnockoffs.android.travel_wishlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 // another part of the program will implement the interface
 interface OnListItemClickedListener {
-    fun onListItemClicked(place: Place)
+    fun onMapRequestButtonClicked(place: Place)
+    fun onStarredStatusChanged(place: Place, isStarred: Boolean)
 }
 
 
@@ -32,14 +34,22 @@ class PlaceRecyclerAdapter(private val places: List<Place>,
             reasonToVisitEditText.text = place.reason
 
             // find datecreated textview and setting its text to the place object's date added
-            val dateCreatedOnTextView: TextView = view.findViewById(R.id.date_place_added)
-            val createdOnText = view.context.getString(R.string.created_on, place.formattedDate())
-            dateCreatedOnTextView.text = createdOnText
+//            val dateCreatedOnTextView: TextView = view.findViewById(R.id.date_place_added)
+//            val createdOnText = view.context.getString(R.string.created_on, place.formattedDate())
+//            dateCreatedOnTextView.text = createdOnText
 
             val mapIcon: ImageView = view.findViewById(R.id.map_icon) // reference to the map icon
             mapIcon.setOnClickListener {
-                onListItemClickedListener.onListItemClicked(place) // because we changed this to an inner class
+                onListItemClickedListener.onMapRequestButtonClicked(place) // because we changed this to an inner class
             }
+
+            val starCheck = view.findViewById<CheckBox>(R.id.star_check)
+            starCheck.setOnClickListener(null)
+            starCheck.isChecked = place.starred
+            starCheck.setOnClickListener {
+                onListItemClickedListener.onStarredStatusChanged(place, starCheck.isChecked) // adapter tells listener about change
+            }
+
         }
     }
 

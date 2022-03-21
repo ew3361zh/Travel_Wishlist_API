@@ -4,14 +4,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 interface OnDataChangedListener {
-    fun onListItemMoved(from: Int, to: Int) // moving positions on the list
+//    fun onListItemMoved(from: Int, to: Int) // moving positions on the list
     fun onListItemDeleted(position: Int)
 }
 
 
 class OnListItemSwipeListener(private val onDataChangedListener: OnDataChangedListener):
     ItemTouchHelper.SimpleCallback(
-    ItemTouchHelper.UP or ItemTouchHelper.DOWN, // allows us to move/reorder things up or down
+    0, // changed to zero to not allow reordering
     ItemTouchHelper.RIGHT // for deleting
 ) {
     override fun onMove( // for moving up and down
@@ -19,9 +19,10 @@ class OnListItemSwipeListener(private val onDataChangedListener: OnDataChangedLi
         viewHolder: RecyclerView.ViewHolder, // where item started before dragging
         target: RecyclerView.ViewHolder // where item picked up ends up
     ): Boolean {
-        val fromPosition = viewHolder.adapterPosition // where is it in the list
-        val toPosition = target.adapterPosition // where was it moved to
-        onDataChangedListener.onListItemMoved(fromPosition, toPosition)
+        // getting rid of moving wishlist items
+//        val fromPosition = viewHolder.adapterPosition // where is it in the list
+//        val toPosition = target.adapterPosition // where was it moved to
+//        onDataChangedListener.onListItemMoved(fromPosition, toPosition)
         return true // return value is, are we going to commit the move,
                     // might be something to come back to if we want people not to be able to move something
     }

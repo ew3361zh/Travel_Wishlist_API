@@ -24,7 +24,8 @@
             android:textColor="@color/text_color"
             android:textSize="@dimen/large_text_size"
             app:layout_constraintEnd_toStartOf="@+id/map_icon"
-            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/star_check"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Place Name" />
 
@@ -47,23 +48,22 @@
             android:layout_margin="@dimen/small_spacing"
             android:padding="@dimen/medium_spacing"
             android:textColor="@color/text_color"
-            app:layout_constraintTop_toBottomOf="@+id/place_name"
             app:layout_constraintEnd_toStartOf="@+id/map_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/date_place_added"
+
+            app:layout_constraintStart_toEndOf="@+id/star_check"
+            app:layout_constraintTop_toBottomOf="@+id/place_name"
             tools:text="Reason to Visit" />
 
-        <TextView
-            android:id="@+id/date_place_added"
-            android:layout_width="0dp"
+        <CheckBox
+            android:id="@+id/star_check"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_spacing"
+            android:button="@drawable/star_check_icons"
             android:padding="@dimen/medium_spacing"
-            android:textColor="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/map_icon"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Date Added" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

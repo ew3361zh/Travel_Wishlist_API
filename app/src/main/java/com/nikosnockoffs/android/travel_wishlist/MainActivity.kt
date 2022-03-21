@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChangedListener { // MainActivtiy will be an activity and an onListItemClickedListener
+class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChangedListener { // MainActivity will be an activity and an onListItemClickedListener
 
     private lateinit var newPlaceEditText: EditText
     private lateinit var addNewPlaceButton: Button
@@ -89,29 +89,34 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
         }
     }
 
-    override fun onListItemClicked(place: Place) {
+    override fun onMapRequestButtonClicked(place: Place) {
         Toast.makeText(this, getString(R.string.map_icon_clicked_confirmation), Toast.LENGTH_SHORT).show()
         val placeLocationUri = Uri.parse("geo:0,0?q=${place.name}")
         val mapIntent = Intent(Intent.ACTION_VIEW, placeLocationUri)
         startActivity(mapIntent)
     }
 
-    override fun onListItemMoved(from: Int, to: Int) {
-        placesViewModel.movePlace(from, to)
-        placesRecyclerAdapter.notifyItemMoved(from, to)
+    override fun onStarredStatusChanged(place: Place, isStarred: Boolean) {
+        place.starred = isStarred
+        placesViewModel.updatePlace(place)
     }
+
+//    override fun onListItemMoved(from: Int, to: Int) {
+//        placesViewModel.movePlace(from, to)
+//        placesRecyclerAdapter.notifyItemMoved(from, to)
+//    }
 
     override fun onListItemDeleted(position: Int) {
         val deletedPlace = placesViewModel.deletePlace(position)
         placesRecyclerAdapter.notifyItemRemoved(position) // notify recyclerAdapter
 
-        Snackbar.make(findViewById(R.id.wishlist_container), getString(R.string.place_deleted, deletedPlace.name), Snackbar.LENGTH_LONG)
-            .setActionTextColor(resources.getColor(R.color.delete_message))
-            .setBackgroundTint(resources.getColor(R.color.black))
-            .setAction(getString(R.string.undo_place_deleted)) { // display an undo button
-                placesViewModel.addNewPlace(deletedPlace, position) // this restores deleted place to viewmodel
-                placesRecyclerAdapter.notifyItemInserted(position) // tells the view model place was brought back
-            }
-            .show()
+//        Snackbar.make(findViewById(R.id.wishlist_container), getString(R.string.place_deleted, deletedPlace.name), Snackbar.LENGTH_LONG)
+//            .setActionTextColor(resources.getColor(R.color.delete_message))
+//            .setBackgroundTint(resources.getColor(R.color.black))
+//            .setAction(getString(R.string.undo_place_deleted)) { // display an undo button
+//                placesViewModel.addNewPlace(deletedPlace, position) // this restores deleted place to viewmodel
+//                placesRecyclerAdapter.notifyItemInserted(position) // tells the view model place was brought back
+//            }
+//            .show()
     }
 }
