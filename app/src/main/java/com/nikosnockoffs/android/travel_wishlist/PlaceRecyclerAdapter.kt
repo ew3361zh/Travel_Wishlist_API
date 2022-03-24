@@ -15,7 +15,7 @@ interface OnListItemClickedListener {
 }
 
 
-class PlaceRecyclerAdapter(private val places: List<Place>,
+class PlaceRecyclerAdapter(var places: List<Place>,
                            private val onListItemClickedListener: OnListItemClickedListener): // our class PlaceRecyclerAdapter is going to extend built-in RecyclerView.Adapter class
     RecyclerView.Adapter<PlaceRecyclerAdapter.ViewHolder>() { // our adapter works with ViewHolders and we have to be specific about what types of ViewHolders
 

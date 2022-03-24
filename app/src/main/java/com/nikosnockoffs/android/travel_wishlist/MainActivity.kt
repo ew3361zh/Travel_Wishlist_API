@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
     // make reference to adapterView
     private lateinit var placesRecyclerAdapter: PlaceRecyclerAdapter
 
+    private lateinit var wishListContainer: View
+
     private val placesViewModel: PlacesViewModel by lazy {
         ViewModelProvider(this).get(PlacesViewModel::class.java)
     }
@@ -37,13 +40,14 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
         addNewPlaceButton = findViewById(R.id.add_new_place_button)
         newPlaceEditText = findViewById(R.id.new_place_name)
         reasonToVisitEditText = findViewById(R.id.reason_to_visit)
+        wishListContainer = findViewById(R.id.wishlist_container)
 
         // gets list of places from view model for use here
         // based on function we had to set up in viewmodel
-        val places = placesViewModel.getPlaces() // places is a list of place objects
+//        val places = placesViewModel.getPlaces() // places is a list of place objects
 
         // see PlacesViewModel for why this is set up this way
-        placesRecyclerAdapter = PlaceRecyclerAdapter(places, this) // placerecycleradapter expects a string so we need to change to an object
+        placesRecyclerAdapter = PlaceRecyclerAdapter(listOf(), this) // placerecycleradapter expects a string so we need to change to an object
         placeListRecyclerView.layoutManager = LinearLayoutManager(this)
         placeListRecyclerView.adapter = placesRecyclerAdapter
 
@@ -52,6 +56,17 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
 
         addNewPlaceButton.setOnClickListener {
             addNewPlace()
+        }
+
+        placesViewModel.allPlaces.observe(this) { places ->
+            placesRecyclerAdapter.places = places
+            placesRecyclerAdapter.notifyDataSetChanged()
+        }
+
+        placesViewModel.userMessage.observe(this) { message ->
+            if (message != null) {
+                Snackbar.make(wishListContainer, message, Snackbar.LENGTH_LONG).show()
+            }
         }
 
     }
@@ -67,13 +82,13 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
         } else {
             val newPlace = Place(name, reason)
             val positionAdded = placesViewModel.addNewPlace(newPlace)
-            if (positionAdded == -1) {
-                Toast.makeText(this, getString(R.string.dupe_place_warning), Toast.LENGTH_SHORT).show()
-            } else {
-                placesRecyclerAdapter.notifyItemInserted(positionAdded) // tell adapter where it's been added
+//            if (positionAdded == -1) {
+//                Toast.makeText(this, getString(R.string.dupe_place_warning), Toast.LENGTH_SHORT).show()
+//            } else {
+//                placesRecyclerAdapter.notifyItemInserted(positionAdded) // tell adapter where it's been added
                 clearForm()
                 hideKeyboard()
-            }
+//            }
         }
     }
 
@@ -107,8 +122,10 @@ class MainActivity : AppCompatActivity(), OnListItemClickedListener, OnDataChang
 //    }
 
     override fun onListItemDeleted(position: Int) {
-        val deletedPlace = placesViewModel.deletePlace(position)
-        placesRecyclerAdapter.notifyItemRemoved(position) // notify recyclerAdapter
+        val place = placesRecyclerAdapter.places[position]
+        placesViewModel.deletePlace(place)
+
+//        placesRecyclerAdapter.notifyItemRemoved(position) // notify recyclerAdapter
 
 //        Snackbar.make(findViewById(R.id.wishlist_container), getString(R.string.place_deleted, deletedPlace.name), Snackbar.LENGTH_LONG)
 //            .setActionTextColor(resources.getColor(R.color.delete_message))
